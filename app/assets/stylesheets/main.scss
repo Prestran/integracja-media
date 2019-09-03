@@ -1,0 +1,26 @@
+.bg-black  {
+    background: #000;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.site-header {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-container {
+    input {
+        border-radius: 0;
+    }
+
+    input[type=text], input[type=password] {
+        width: 25%;
+        padding: 5px;
+        border: 1px solid #ccc;
+    }
+}

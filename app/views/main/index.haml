@@ -1,0 +1,13 @@
+.row.text-center.mt-5.pt-5.main-container
+    .col-12
+        = form_with url: user_session_path, method: :post do |f|
+            .form-group
+                = f.text_field :login, placeholder: t('common.login')
+            .form-group
+                = f.password_field :password,  placeholder: t('common.password')
+            .form-group.mt-5
+                = f.submit :submit_app, value: t('main.index.button_app'),  class: 'btn btn-success w-25'
+            .form-group
+                = link_to t('main.index.button_fb'), user_facebook_omniauth_authorize_path, value: t('main.index.button_fb'), class: 'btn btn-info w-25'
+            .form-group
+                =  link_to t('main.index.button_linked'), user_linked_in_omniauth_authorize_path, value: t('main.index.button_fb'), class: 'btn btn-info w-25'
