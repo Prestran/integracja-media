@@ -1,0 +1,27 @@
+.row.text-center.mt-5.pt-5.main-container
+  %h2.w-100= t('common.sign_up')
+  .col-12
+    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+      = render "devise/shared/error_messages", resource: resource
+      .form-group.mt-3
+        = f.text_field :email, placeholder: t('common.email')
+      .form-group
+        = f.text_field :login, placeholder: t('common.login')
+      .form-group
+        = f.password_field :password, placeholder: t('common.password')
+      .form-group
+        = f.password_field :password_confirmation, placeholder: t('common.password_confirmation')
+      .form-group
+        = f.text_field :first_name, placeholder: t('common.first_name')
+      .form-group
+        = f.text_field :last_name, placeholder: t('common.last_name')
+      .form-group
+        = f.text_field :www_site, placeholder: t('common.www_site')
+      .form-group
+        = f.text_area :about_me, placeholder: t('common.about_me') 
+      .form-group.mt-5
+        = f.submit :submit_app, value: t('main.index.button_app'),  class: 'btn btn-success w-25'
+      .form-group
+        - resource_class.omniauth_providers.each do |provider|
+          = link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: 'btn btn-info w-25 mt-2'
+          %br

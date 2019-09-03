@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  TEMP_EMAIL_PREFIX = 'change@me'
-  TEMP_EMAIL_REGEX = /\Achange@me/
+  TEMP_EMAIL_PREFIX = 'bademail@bad.com'
+  TEMP_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :omniauthable, :registerable, :confirmable,
@@ -31,8 +31,10 @@ class User < ApplicationRecord
 
       # Create the user if it's a new registration
       if user.nil?
+        name = auth.extra.raw_info.name.split(' ')
         user = User.new(
-          name: auth.extra.raw_info.name,
+          first_name: name.first,
+          last_name: name.last,
           #username: auth.info.nickname || auth.uid,
           email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
           password: Devise.friendly_token[0,20]

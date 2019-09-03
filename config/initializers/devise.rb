@@ -296,6 +296,6 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
-  config.omniauth :facebook, "KEY", "SECRET"
+  config.omniauth :facebook, "2401653953274878", "39424fda19402b4327542e26f42c89d0"
   config.omniauth :linked_in, "KEY", "SECRET"
 end

@@ -1,0 +1,8 @@
+.row.mt-5.text-center
+    .col-12
+        %h2= t('users.show.welcome', email: @user.email).html_safe
+.row.mt-5
+    .col-6.text-right
+        = link_to t('user.show.edit_profile'), edit_user_path, class: 'btn btn-info w-50'
+    .col-6.text-left
+        = link_to t('common.logout'), destroy_user_session_path(id: @user.id), method: :delete, class: 'btn btn-info w-50'

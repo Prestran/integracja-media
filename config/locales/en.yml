@@ -36,7 +36,24 @@ en:
       button_app: Login using app
       button_fb: Login using facebook
       button_linked: Login using linkedin
+      no_account: "Not having an account? Register now!"
+      show_profile: Show your profile
+  users:
+    show:
+      welcome: "Welcome <em>%{email}</em>!"
+      edit_profile: Edit profile
   common:
-    login: "Email/login: "
+    about_me: About me
+    email: Email
+    email_login: "Email/login: "
+    first_name: First name
+    last_name: Last name
+    login: Login
+    logout: Logout
+    home: Go back to home page
     password: "Password: "
+    password_confirmation: Password confirmation
+    sign_up: Sign up
     site_title: Integration with medias
+    www_site: WWW url site
+    
