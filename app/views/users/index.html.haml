@@ -1,0 +1,15 @@
+.row.mt-5
+    .col-12.text-center
+        %h1= t('common.all_users')
+    .col-12.mt-5
+        %table.table
+            %tr
+                %th= t('common.login')
+                %th= t('common.about_me')
+            - @identities.each do |identity|
+                %tr
+                    %td= identity.user.login
+                    %td= identity.user.about_me
+            %tr
+                %td{ colspan: 2 }
+                = will_paginate @identities

@@ -6,7 +6,7 @@
       .form-group.mt-3
         = f.text_field :email, placeholder: t('common.email')
       .form-group
-        = f.text_field :login, placeholder: t('common.login')
+        = f.text_field :username, placeholder: t('common.username')
       .form-group
         = f.password_field :password, placeholder: t('common.password')
       .form-group
@@ -20,7 +20,7 @@
       .form-group
         = f.text_area :about_me, placeholder: t('common.about_me') 
       .form-group.mt-5
-        = f.submit :submit_app, value: t('main.index.button_app'),  class: 'btn btn-success w-25'
+        = f.submit :register, value: t('main.index.register_app'),  class: 'btn btn-success w-25'
       .form-group
         - resource_class.omniauth_providers.each do |provider|
           = link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: 'btn btn-info w-25 mt-2'

@@ -1,0 +1,14 @@
+= form_for @user, method: :patch do |f|
+    = render "devise/shared/error_messages", resource: @user
+    .form-group
+        = f.text_field :login, placeholder: t('common.login')
+    .form-group
+        = f.text_field :first_name, placeholder: t('common.first_name')
+    .form-group
+        = f.text_field :last_name, placeholder: t('common.last_name')
+    .form-group
+        = f.text_field :www_site, placeholder: t('common.www_site')
+    .form-group
+        = f.text_area :about_me, placeholder: t('common.about_me') 
+    .form-group.mt-5
+        = f.submit :submit, value: t('common.submit'),  class: 'btn btn-success w-25'

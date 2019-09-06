@@ -1,0 +1,19 @@
+.row.text-center.mt-5.pt-5.main-container
+  .col-12
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .form-group
+        = f.text_field :login, placeholder: t('common.login')
+      .form-group
+        = f.password_field :password,  placeholder: t('common.password')
+      -# - if devise_mapping.rememberable?
+      .form-group
+        = f.check_box :remember_me
+        = f.label :remember_me
+      .form-group.mt-5
+        = f.submit :submit_app, value: t('main.index.button_app'),  class: 'btn btn-success w-25'
+      .form-group
+        = link_to t('main.index.button_fb'), user_facebook_omniauth_authorize_path, value: t('main.index.button_fb'), class: 'btn btn-info w-25'
+      .form-group
+        = link_to t('main.index.button_linked'), user_linked_in_omniauth_authorize_path, value: t('main.index.button_fb'), class: 'btn btn-info w-25'  
+  .col-12
+    = link_to t('main.index.no_account'), new_user_registration_path

@@ -1,12 +1,23 @@
 class User < ApplicationRecord
   TEMP_EMAIL_PREFIX = 'bademail@bad.com'
-  TEMP_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  TEMP_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :omniauthable, :registerable, :confirmable,
-  :recoverable, :rememberable, :trackable, :validatable
+  :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:login]
 
-  validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
+  validates_presence_of :first_name, :last_name
+  validates :username, presence: :true, uniqueness: { case_sensitive: false }
+  validate :validate_login
+
+  attr_writer :login
+
+  def validate_login
+    if User.where(email: login).exists?
+      errors.add(:login, :invalid)
+    end
+  end
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
@@ -35,6 +46,7 @@ class User < ApplicationRecord
         user = User.new(
           first_name: name.first,
           last_name: name.last,
+          username: name.join('-').downcase!,
           #username: auth.info.nickname || auth.uid,
           email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
           password: Devise.friendly_token[0,20]
@@ -52,7 +64,22 @@ class User < ApplicationRecord
     user
   end
 
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    debugger
+    if login = conditions.delete(:login)
+      where(conditions).where(["username = :value OR lower(email) = lower(:value)", { :value => login }]).first
+    elsif conditions.has_key?(:login) || conditions.has_key?(:email)
+      conditions[:email].downcase! if conditions[:email]
+      where(conditions.to_h).first
+    end      
+  end
+
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
+  end
+
+  def login
+    @login || self.username || self.email
   end
 end

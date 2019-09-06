@@ -1,21 +1,21 @@
 class UsersController < ApplicationController
+    load_and_authorize_resource
     before_action :set_user, only: [:show, :edit, :update, :destroy]
-  
+
     # GET /users/:id.:format
-    def show
-      # authorize! :read, @user
-    end
+    def show;end
   
     # GET /users/:id/edit
-    def edit
-      # authorize! :update, @user
-    end
+    def edit;end
   
+    def index
+      @identities = Identity.all.paginate(page: params[:page], per_page: 15)
+    end
+    
     # PATCH/PUT /users/:id.:format
     def update
-      # authorize! :update, @user
       respond_to do |format|
-        if @user.update(user_params)
+        if @user.update(user_params.except(:email, :password, :password_confirmation))
           sign_in(@user == current_user ? @user : current_user, :bypass => true)
           format.html { redirect_to @user, notice: 'Your profile was successfully updated.' }
           format.json { head :no_content }
@@ -28,7 +28,6 @@ class UsersController < ApplicationController
   
     # GET/PATCH /users/:id/finish_signup
     def finish_signup
-      # authorize! :update, @user 
       if request.patch? && params[:user] #&& params[:user][:email]
         if @user.update(user_params)
           @user.skip_reconfirmation!
@@ -56,7 +55,7 @@ class UsersController < ApplicationController
       end
   
       def user_params
-        accessible = [ :name, :email ] # extend with your own params
+        accessible = [ :first_name, :last_name, :email, :login, :about_me, :www_site] # extend with your own params
         accessible << [ :password, :password_confirmation ] unless params[:user][:password].blank?
         params.require(:user).permit(accessible)
       end

@@ -37,6 +37,7 @@ en:
       button_fb: Login using facebook
       button_linked: Login using linkedin
       no_account: "Not having an account? Register now!"
+      register_app: Register
       show_profile: Show your profile
   users:
     show:
@@ -44,6 +45,7 @@ en:
       edit_profile: Edit profile
   common:
     about_me: About me
+    all_users: List of all application users
     email: Email
     email_login: "Email/login: "
     first_name: First name
@@ -55,5 +57,6 @@ en:
     password_confirmation: Password confirmation
     sign_up: Sign up
     site_title: Integration with medias
+    submit: Submit
     www_site: WWW url site
     

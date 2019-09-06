@@ -40,13 +40,16 @@ gem 'devise'
 gem 'haml'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
-
+gem 'cancancan'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 
+gem 'will_paginate', '~> 3.1.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails', '~> 3.8'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
