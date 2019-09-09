@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   TEMP_EMAIL_PREFIX = 'bademail@bad.com'
-  TEMP_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :omniauthable, :registerable, :confirmable,
@@ -20,7 +19,6 @@ class User < ApplicationRecord
   end
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
-
     # Get the identity and user if they exist
     identity = Identity.find_for_oauth(auth)
 
@@ -66,7 +64,6 @@ class User < ApplicationRecord
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
-    debugger
     if login = conditions.delete(:login)
       where(conditions).where(["username = :value OR lower(email) = lower(:value)", { :value => login }]).first
     elsif conditions.has_key?(:login) || conditions.has_key?(:email)
@@ -76,7 +73,7 @@ class User < ApplicationRecord
   end
 
   def email_verified?
-    self.email && self.email !~ TEMP_EMAIL_REGEX
+    self.email && self.email !~ URI::MailTo::EMAIL_REGEXP
   end
 
   def login
